@@ -1,0 +1,32 @@
+# .github/workflows/ci.yml
+name: React CI
+
+on:
+  push:
+    branches:
+      - main  # You can change 'main' to your default branch name if different.
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # Adjust to the Node.js version you are using
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Run tests
+        run: npm test -- --watchAll=false --maxWorkers=2
